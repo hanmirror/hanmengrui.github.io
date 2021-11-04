@@ -1,20 +1,12 @@
-## Welcome to GitHub Pages
+## Welcome to HanMengrui's website
 
-You can use the [editor on GitHub](https://github.com/hanmirror/hanmengrui.github.io/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+# Overview
+Hello！I am HanMengrui.
+I will show you some details about the projects I mentioned in my CV.
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
+## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
+### 12/2019-06/2021
 - Bulleted
 - List
 
