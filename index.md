@@ -23,11 +23,15 @@ This is the laser tracker made by my teacher and I. I solved the problem that th
 </table>
 <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker3.png" width="100%">   
 
-## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
-### 12/2019-06/2021
+## Support Vector Machine-Based Gear Defect Detection Software System Design
+### 04/2018-09/2018
+Created algorithm with MATLAB and input the sound of gear rotation into support vector machine to identify 
+whether gears were good 
+ <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/SVM.png" width="70%"> 
 
-## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
-### 12/2019-06/2021
+## A Smart Mobility Robot for Senior Citizens
+### 05/2018-08/2018
+
 
 ## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
 ### 12/2019-06/2021
