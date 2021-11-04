@@ -9,26 +9,19 @@ This is the laser tracker made by my teacher and I. I solved the problem that th
 <table border="0">
   <tr>
  </td>
-    <td width="50%">
-      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker.png" width="50%">     
+    <td width="33%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker.png" width="100%">     
  </td>
-    <td width="50%">
-      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker1.png" width="50%">  
+    <td width="33%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker1.png" width="100%">  
     </td> 
+     </td>
+    <td width="33%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker5.jpg" width="100%">     
+ </td>
   </tr>
 </table>
 <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker3.png" width="100%">   
-<table border="0">
-  <tr>
- </td>
-    <td width="50%">
-      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker3.png" width="50%">     
- </td>
-    <td width="50%">
-      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker1.png" width="50%">  
-    </td> 
-  </tr>
-</table>
 
 ## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
 ### 12/2019-06/2021
