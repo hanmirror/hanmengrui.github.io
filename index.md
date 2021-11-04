@@ -1,7 +1,7 @@
 ## Welcome 
 # Overview
 Hello！I am HanMengrui.
-I will show you some details about the projects I mentioned in my CV.
+I will show you some pictures about the projects I mentioned in my CV.
 
 ## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
 ### 12/2019-06/2021
@@ -26,11 +26,12 @@ This is the laser tracker made by my teacher and I. I solved the problem that th
 ## Support Vector Machine-Based Gear Defect Detection Software System Design
 ### 04/2018-09/2018
 Created algorithm with MATLAB and input the sound of gear rotation into support vector machine to identify 
-whether gears were good 
+whether gears were good.
  <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/SVM.png" width="70%"> 
 
 ## A Smart Mobility Robot for Senior Citizens
 ### 05/2018-08/2018
+
 <table border="0">
   <tr>
  </td>
@@ -44,18 +45,13 @@ whether gears were good
 </table>
 
 ## Rubik’s Cube-Based Restoring Robot
-### 10/2018-06/2019
-<table border="0">
-  <tr>
- </td>
-    <td width="50%">
-      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/rosRobot.jpg" width="100%">     
- </td>
-    <td width="50%">
-      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/rosRobot1.jpg" width="100%">  
-    </td> 
-  </tr>
-</table>
+### 10/2018-06/2019   
+Created algorithm based on machine vision to identify Rubik’s cube’s status with Python and Opencv, input it into 
+two phase algorithm to get optimal choice to restore this cube within 21 steps.
+   <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube3.jpg" width="100%"> 
+    <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube4.jpg" width="100%"> 
+    <video src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube1.mp4" width="100%">
+
 
 ## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
 ### 12/2019-06/2021
