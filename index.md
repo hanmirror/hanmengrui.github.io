@@ -48,14 +48,17 @@ whether gears were good.
 ### 10/2018-06/2019   
 Created algorithm based on machine vision to identify Rubik’s cube’s status with Python and Opencv, input it into 
 two phase algorithm to get optimal choice to restore this cube within 21 steps.
+I've removed three motors so you can see how this robot work better.
    <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube3.jpg" width="100%"> 
     <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube4.jpg" width="100%"> 
-    <video src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube1.mp4" width="100%">
+    <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube6.gif" width="70%">
 
 
-## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
-### 12/2019-06/2021
+## AVG Car Design based on PID control
+### 10/2018-12/2018
+<img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/AVG.png.jpg" width="100%">
 
-## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
-### 12/2019-06/2021
+## Four Tracked Lunar Service Robot
+### 01/2019-05/2019
+<img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot.png" width="100%">
 
