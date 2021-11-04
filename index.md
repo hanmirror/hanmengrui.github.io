@@ -8,7 +8,7 @@ I will show you some details about the projects I mentioned in my CV.
 ## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
 ### 12/2019-06/2021
 
-![lasertracker](https://user-images.githubusercontent.com/39639600/140240222-9e86b054-0e1d-4a52-ae5e-71614b6bac12.png)
+![lasertracker](https://github.com/hanmirror/hanmengrui.github.io/blob/gh-pages/lasertracker.png)
 
 
 
