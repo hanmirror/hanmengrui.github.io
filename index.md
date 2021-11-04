@@ -51,14 +51,41 @@ two phase algorithm to get optimal choice to restore this cube within 21 steps.
 I've removed three motors so you can see how this robot work better.
    <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube3.jpg" width="100%"> 
     <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube4.jpg" width="100%"> 
-    <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube6.gif" width="70%">
+    <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube6.gif" width="50%">
 
 
 ## AVG Car Design based on PID control
 ### 10/2018-12/2018
-<img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/AVG.png.jpg" width="100%">
+<img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/AVG.png.jpg" width="50%">
 
 ## Four Tracked Lunar Service Robot
 ### 01/2019-05/2019
-<img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot.png" width="100%">
+<table border="0">
+  <tr>
+ </td>
+    <td width="50%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot.png" width="100%">     
+ </td>
+    <td width="50%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot1.png" width="100%">  
+    </td> 
+  </tr>
+</table>
+<table border="0">
+  <tr>
+ </td>
+    <td width="25%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot.png" width="100%">     
+ </td>
+    <td width="25%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot1.png" width="100%">  
+    </td> 
+     <td width="25%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot1.png" width="100%">  
+    </td> 
+     <td width="25%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot1.png" width="100%">  
+    </td> 
+  </tr>
+</table>
 
