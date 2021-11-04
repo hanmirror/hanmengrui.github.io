@@ -1,6 +1,4 @@
-## Welcome to HanMengrui's website
-
-
+## Welcome 
 # Overview
 Hello！I am HanMengrui.
 I will show you some details about the projects I mentioned in my CV.
@@ -10,19 +8,18 @@ I will show you some details about the projects I mentioned in my CV.
 
 ![lasertracker](https://github.com/hanmirror/hanmengrui.github.io/blob/gh-pages/lasertracker.png)
 
+## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
+### 12/2019-06/2021
 
+## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
+### 12/2019-06/2021
 
-**Bold** and _Italic_ and `Code` text
+## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
+### 12/2019-06/2021
 
-[Link](url) and ![Image](src)
-```
+## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
+### 12/2019-06/2021
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
+### 12/2019-06/2021
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/hanmirror/hanmengrui.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
