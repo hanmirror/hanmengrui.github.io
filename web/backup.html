@@ -1,0 +1,494 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0039) -->
+<html xmlns="http://www.w3.org/1999/xhtml"><script type="text/javascript" class="__REQUESTLY__SCRIPT">(function (namespace) {
+  window[namespace] = window[namespace] || {};
+  window[namespace].responseRules = {};
+
+  const isApplicableOnUrl = (url) =>
+    window[namespace].responseRules.hasOwnProperty(url);
+  const getResponseRule = (url) => window[namespace].responseRules[url];
+  const notifyRuleApplied = (rule) => {
+    window.postMessage(
+      {
+        from: "requestly",
+        type: "response_rule_applied",
+        id: rule.id,
+      },
+      window.location.href
+    );
+  };
+
+  // Intercept XMLHttpRequest
+  const onReadyStateChange = function () {
+    if (this.readyState === 4 && isApplicableOnUrl(this.responseURL)) {
+      const responseRule = getResponseRule(this.responseURL);
+      const { response } = responseRule;
+      const responseType = this.responseType;
+      const customResponse =
+        response.type === "code"
+          ? responseRule.evaluator({
+              method: this.method,
+              url: this.responseURL,
+              requestHeaders: this.requestHeaders,
+              requestData: this.requestData,
+              responseType: this.responseType,
+              response: this.response,
+            })
+          : response.value;
+
+      Object.defineProperty(this, "response", {
+        get: function () {
+          if (response.type === "static" && responseType === "json") {
+            return JSON.parse(customResponse);
+          }
+          return customResponse;
+        },
+      });
+
+      if (responseType === "" || responseType === "text") {
+        Object.defineProperty(this, "responseText", {
+          get: function () {
+            return customResponse;
+          },
+        });
+      }
+
+      notifyRuleApplied(responseRule);
+    }
+  };
+
+  const XHR = XMLHttpRequest;
+  XMLHttpRequest = function () {
+    const xhr = new XHR();
+    xhr.addEventListener(
+      "readystatechange",
+      onReadyStateChange.bind(xhr),
+      false
+    );
+    return xhr;
+  };
+  XMLHttpRequest.prototype = XHR.prototype;
+  Object.entries(XHR).map(([key, val]) => {
+    XMLHttpRequest[key] = val;
+  });
+
+  const open = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function (method) {
+    this.method = method;
+    open.apply(this, arguments);
+  };
+
+  const send = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.send = function (data) {
+    this.requestData = data;
+    send.apply(this, arguments);
+  };
+
+  let setRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
+  XMLHttpRequest.prototype.setRequestHeader = function (header, value) {
+    this.requestHeaders = this.requestHeaders || {};
+    this.requestHeaders[header] = value;
+    setRequestHeader.apply(this, arguments);
+  };
+
+  // Intercept fetch API
+  const _fetch = fetch;
+  fetch = async (resource, initOptions) => {
+    const url =
+      resource instanceof Request ? resource.url : resource.toString();
+    const fetchedResponse = await _fetch(resource, initOptions);
+
+    if (!isApplicableOnUrl(url)) {
+      return fetchedResponse;
+    }
+
+    let method, requestHeaders, requestData;
+
+    if (resource instanceof Request) {
+      const request = resource.clone();
+      method = request.method || "GET";
+      requestHeaders =
+        request.headers &&
+        Array.from(request.headers).reduce((obj, [key, val]) => {
+          obj[key] = val;
+          return obj;
+        }, {});
+      requestData = await request.text();
+    } else {
+      method = initOptions.method || "GET";
+      if (initOptions.headers instanceof Headers) {
+        requestHeaders = Array.from(initOptions.headers).reduce(
+          (obj, [key, val]) => {
+            obj[key] = val;
+            return obj;
+          },
+          {}
+        );
+      } else {
+        requestHeaders = initOptions.headers;
+      }
+      requestData = initOptions.body;
+    }
+
+    const responseRule = getResponseRule(url);
+    const customResponseText =
+      responseRule.response.type === "code"
+        ? responseRule.evaluator({
+            method,
+            url,
+            requestHeaders,
+            requestData,
+            response: await fetchedResponse.text(),
+          })
+        : responseRule.response.value;
+
+    notifyRuleApplied(responseRule);
+
+    return new Response(new Blob([customResponseText]), {
+      status: fetchedResponse.status,
+      statusText: fetchedResponse.statusText,
+      headers: fetchedResponse.headers,
+    });
+  };
+})('__REQUESTLY__')</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>
+function PopupCenter(pageURL, title,w,h) {
+var left = (screen.width/2)-(w/2);
+var top = (screen.height/2)-(h/2);
+var targetWin = window.open (pageURL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+} 
+</script>
+
+
+
+<meta name="keywords" content="">
+<meta name="description" content="">
+
+<title>Han Mengrui's Introduction</title>
+<link href="./files/style.css" rel="stylesheet" type="text/css" media="screen">
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<div id="logo">
+			<h1><a href="#">Han Mengrui</a></h1>
+			<p> Beijing University of Technology<a href="http://www.freecsstemplates.org/"></a></p>
+	  </div>
+		
+	</div>
+	<!-- end #header -->
+	<div id="menu">
+		<ul>
+			<li class="current_page_item"><a href="#">About</a></li>
+			<li><a href="#Research">Research</a></li>
+			<li><a href="#Publications">Publications</a></li>
+			<li><a href="#Lab">Lab</a></li>
+			<li><a href="#Teaching">Teaching</a></li>
+			<li><a href="#Contact">Contact</a></li>
+      <li><a href="#Links">Links</a></li>
+			<li><a href="HanMengrui CV.pdf">CV</a></li>				
+		</ul>
+	</div>
+<!-- end #menu -->
+	<div id="page">
+	<div id="page-bgtop">
+	<div id="page-bgbtm">
+		<div id="content">
+    <div class="post">
+            
+        <h2 class="title"><a name="Research"></a>Research</h2>
+				
+				<div class="entry">
+
+          <p>My research has been exploring  the<strong> interface between phonology and phonetics</strong> focusing on a range of <strong>phonological phenomena </strong>(palatalization, assimilation, etc.) and their <strong>phonetic correlates </strong>or <strong>sources </strong>(coarticulation, misperception, etc.). I have worked with a number of languages (Russian, Komi-Permyak, Japanese, Kannada, Korean) and employed various experimental methods, including articulography, electropalatography,       ultrasound, acoustic analysis, and perceptual experiments.</p>
+
+			    <p>For more information, please see my profiles at <a href="https://scholar.google.ca/citations?user=1V6ZO2oAAAAJ&amp;hl=en"><strong>Google Scholar</strong></a>, <a href="https://www.researchgate.net/profile/Alexei_Kochetov"><strong>
+				   Research Gate</strong></a>, and <a href="http://works.bepress.com/alexei_kochetov/"><strong>Selected Works</strong></a>. </p>
+                  
+        </div>
+		  </div>
+            
+            
+            
+			<div class="post">
+				<h2 class="title"><a name="Publications"></a>Publications</h2>
+				<div class="entry">
+								
+          <p>Selected recent publications: </p>
+          <ul>
+           <li> Tabain, Marija, <strong>Kochetov, Alexei</strong>, &amp; &amp; Richard Beare. 2020. An ultrasound and formant study of manner contrasts at four coronal places of articulation. <i>The Journal of the Acoustical Society of America</i>, 148, 5, 3195-3217.
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>, Laura Colantoni, &amp; Jeffrey Steele. 2020. Variable assimilation of English word-final /n/: Electropalatographic evidence. <i>English Language &amp; Linguistics</i>, 1-32, Published online by Cambridge University Press: 17 August 2020. 
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>, Paul Arsenault, Jan Heegård Petersen, Sikandar Kalas, &amp; Taj Khan Kalash. 2020. Kalasha (Illustrations of IPA). <i>Journal of International Phonetic Association</i>. 22 pp., Published online June 2020, doi:10.1017/S0025100319000367
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>, Jan Heegård Petersen, &amp; Paul Arsenault. 2020. Acoustics of Kalasha laterals in a cross-linguistics perspective. <i>Journal of the Acoustical Society of America</i>, 147, 3012-3027. 
+					  </li>
+            
+            <li> Howson, Phil &amp; <strong>Alexei Kochetov</strong>. 2020. Lowered F2 observed in uvular rhotics involves a tongue root gesture: evidence from Upper Sorbian. <i>Journal of the Acoustical Society of America</i>, 147, 2845-2857. 
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>. 2020. Research methods in articulatory phonetics II: Studying other gestures &amp; Recent trends. <i>Language and Linguistic Compass</i>, 1-32, e12371. https://doi.org/10.1111/lnc3.12371.
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>. 2020. Research methods in articulatory phonetics I: Introduction &amp; Studying oral gestures. <i>Language and Linguistic Compass</i>, 4, 1-29, https://doi.org/10.1111/lnc3.12368 
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>, &amp; Paul Arsenault. 2020. Kalasha affricates: An acoustic analysis of place contrasts. <i>Journal of South Asian Languages and Linguistics</i>, special volume on the phonetics of South Asian languages, 29 pp. DOI: https://doi.org/10.1515/jsall-2019-2013. Published online by de Gruyter, 17 January 2020.
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>, Marija Tabain, N. Sreedevi, &amp; Richard Beare. 2018. Manner and place differences in Kannada dentals and retroflexes: Articulatory and acoustic results. <i>Journal of the Acoustical Society of America</i> 144, 3221–3235.
+					  </li>
+            
+            <li> Matsui, Mayuki &amp; <strong>Alexei Kochetov</strong>. 2018. Tongue root positioning for voicing vs. contrastive palatalization: An ultrasound study of Russian word-initial coronal stops. <i>Journal of the Phonetic Society of Japan</i> 22 (2), 81-94. 
+					  </li>
+            
+            <li> Ozburn, Avery &amp; <strong>Alexei Kochetov</strong>. 2018. Lezgian ejective harmony. <i>Phonology</i> 35 (3), 407-440.  
+					  </li>
+            
+            <li> Spinu, Laura, <strong>Alexei Kochetov</strong>, &amp;  Jason Lilley. 2018. Acoustic classification of Russian plain and palatalized sibilant fricatives: Spectral vs. cepstral measures. <i>Speech Communication</i> 100. pp. 41-50. <a href="https://doi.org/10.1016/j.specom.2018.04.010">[doi link]</a> 
+					  </li>
+            
+            <li> Steele, Jeffrey, Laura Colantoni, &amp;  <strong>Alexei Kochetov</strong>. 2018. Gradient assimilation in French cross-word /n/+velar stop sequences. <i>Journal of International Phonetic Association</i>. pp. 1-22. <a href="https://doi.org/10.1017/S0025100317000573">[doi link]</a> 
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>. 2018. Linguopalatal contact contrasts in the production of Japanese consonants: EPG data from five speakers. <i>Acoustical Science and Technology (Japan)</i>, 39(2), a special issue on Speech Communication. 84-91. <a href="https://doi.org/10.1250/ast.39.84">[doi link]</a>  
+					  </li>
+            
+            <li> Tabain, Marija &amp;  <strong>Alexei Kochetov</strong>. 2018. Acoustic realization and inventory size: Kannada and Malayalam alveolar/retroflex laterals and /ɻ/. <i>Phonetica</i> 75. 85–109.  <a href="https://doi.org/10.1159/000478104">[doi link]</a>
+					  </li>
+            
+          <li> Pouplier, Marianne, Stefania Marin, &amp;  <strong>Alexei Kochetov</strong>. 2017. The difficulty of articulatory complexity (commentary). <i>Cognitive Neuropsychology</i>. 34(7/8), 472-475. <a href="https://doi.org/10.1080/02643294.2017.1419947">[doi link]</a>  
+					  </li>
+            
+            <li> Alderete, John &amp;  <strong>Alexei Kochetov</strong>. 2017. Integrating sound symbolism with core grammar: The case of expressive palatalization. <i>Language</i> 93(4). 731-766. <a href="https://doi.org/10.1353/lan.2017.0056">[doi link]</a>
+					  </li>
+            
+            <li> Pouplier, Marianne, Stefania Marin, Philip Hoole, &amp;  <strong>Alexei Kochetov</strong>. 2017. Speech rate effects in Russian onset clusters are modulated by frequency, but not auditory cue robustness. <i>Journal of Phonetics</i>, 64. 108-126.
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>. 2017. Acoustics of Russian voiceless sibilant fricatives. <i>Journal of International Phonetic Association</i>. 1–28. <a href="https://doi.org/10.1017/S0025100317000019">[doi link]</a>
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong> &amp;  Yoonjung Kang. 2017. Supralaryngeal implementation of length and laryngeal contrasts in Japanese and Korean. <i>Canadian Journal of Linguistics/Revue canadienne de linguistique</i>, 62(1). 1–38. <a href="https://doi.org/10.1017/cnj.2016.39">[doi link]</a>
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>. 2016. Palatalization and glide strengthening as competing repair strategies: Evidence from Kirundi. <i>Glossa: a journal of general linguistics 1(1)</i> 14. 1–31.  <a href="http://doi.org/10.5334/gjgl.32">[doi link]</a>
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong> &amp;  N. Sreedevi. 2016. Articulation and acoustics of Kannada affricates: A case of geminate /ʧ/. <i>Clinical Linguistics and Phonetics</i>, 30(3-5). 202-226. <a href="http://dx.doi.org/10.3109/02699206.2015.1080762">[doi link]</a>
+ 					  </li>
+             
+             <li> Howson, Phil, <strong>Alexei Kochetov</strong>, &amp;  Pascal van Lieshout. 2015. Examination of the grooving patterns of the Czech trill-fricative. <i>Journal of Phonetics</i>, 49. 117-129.
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei.</strong>. 2014. Voicing and tongue-palate contact differences in Japanese obstruents. <i>Journal of the Phonetic Society of Japan</i>, 18. 63-76. 
+					  </li>
+            
+            <li> <strong>Kochetov, Alexei</strong>, N. Sreedevi, Midula Kasim, &amp;  R. Manjula. 2014. Spatial and dynamic aspects of retroflex production: An ultrasound and EMA study of Kannada geminate stops. <i>Journal of Phonetics</i>, 46. 11-42. </li>			          
+		          </ul>
+		          <p>For copies of these and other papers, please visit my <a href="https://www.researchgate.net/profile/Alexei_Kochetov"><strong>
+				   Research Gate</strong></a> and <a href="http://works.bepress.com/alexei_kochetov/"><strong>SelectedWorks</strong></a> pages. </p>
+			  </div>
+    </div>
+            <div class="post">
+				<h2 class="title"><a name="Lab"></a>Phonetics Lab</h2>
+			  <div class="entry">
+				  
+					<p>I am a student in Beijing University of Technology</p>
+        </div>
+			</div>
+			<div class="post">
+				<h2 class="title"><a name="Teaching"></a>Teaching </h2>
+				<div class="entry">
+					<p>Since 2007, I have taught a range of undergraduate and graduate courses, mainly in phonetics and phonology, but also in historical linguistics and general linguistics. Here are some of the courses: </p>
+					<ul>
+            <li>LIN100 <strong>Introduction to Linguistics</strong></li>
+					  <li>TBB199<strong> Analyzing speech sounds</strong></li>
+					  <li>LIN228<strong> Phonetics</strong></li>
+					  <li>LIN229<strong> Sound Patterns</strong></li>
+					  <li>LIN362/1162 <strong>Historical Linguistics</strong></li>
+					  <li>LIN423/1127 <strong>Phonetic Analysis</strong></li>
+					  <li>LIN1106 <strong>Experimental Design</strong> (graduate)</li>
+					  <li>LIN1211 <strong>Advanced Phonetics</strong> (graduate)</li>
+					  <li>LIN1224 <strong>Advanced Phonology</strong> (graduate)</li>
+		      </ul>
+			  </div>
+			</div>
+
+      <div>
+				<div class="entry" style='background-color: white;'>
+        <div id="readme" class="Box-body readme blob js-code-block-container p-5 p-xl-6 gist-border-0">
+          <article class="markdown-body entry-content container-lg" itemprop="text"><h2><a id="user-content-welcome" class="anchor" aria-hidden="true" href="#welcome"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Welcome</h2>
+      <h1><a id="user-content-overview" class="anchor" aria-hidden="true" href="#overview"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Overview</h1>
+      <p>Hello！I am HanMengrui.
+      I will show you some pictures about the projects I mentioned in my CV.</p>
+      <h2><a id="user-content-graduation-thesis-lightweight-method-of-laser-tracing-system-mechanical-structure-based-on-3d-topology-optimization" class="anchor" aria-hidden="true" href="#graduation-thesis-lightweight-method-of-laser-tracing-system-mechanical-structure-based-on-3d-topology-optimization"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization</h2>
+      <h3><a id="user-content-122019-062021" class="anchor" aria-hidden="true" href="#122019-062021"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>12/2019-06/2021</h3>
+      <p>This is the laser tracker made by my teacher and I. I solved the problem that the balance weight of the laser tracker's pitch platform cannot reach the required mass in a limited volume. And I redesign the pitch platform.</p>
+      <table border="0">
+        <tbody><tr>
+       
+          <td width="33%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/lasertracker.png" width="100%" style="max-width: 100%;"></a>     
+       </td>
+          <td width="33%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker1.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/lasertracker1.png" width="100%" style="max-width: 100%;"></a>  
+          </td> 
+           
+          <td width="33%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker5.jpg"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/lasertracker5.jpg" width="100%" style="max-width: 100%;"></a>     
+       </td>
+        </tr>
+      </tbody></table>
+      <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/lasertracker3.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/lasertracker3.png" width="100%" style="max-width: 100%;"></a></p>   
+      <h2><a id="user-content-support-vector-machine-based-gear-defect-detection-software-system-design" class="anchor" aria-hidden="true" href="#support-vector-machine-based-gear-defect-detection-software-system-design"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Support Vector Machine-Based Gear Defect Detection Software System Design</h2>
+      <h3><a id="user-content-042018-092018" class="anchor" aria-hidden="true" href="#042018-092018"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>04/2018-09/2018</h3>
+      <p>Created algorithm with MATLAB and input the sound of gear rotation into support vector machine to identify
+      whether gears were good.
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/SVM.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/SVM.png" width="70%" style="max-width: 100%;"></a></p>
+      <h2><a id="user-content-a-smart-mobility-robot-for-senior-citizens" class="anchor" aria-hidden="true" href="#a-smart-mobility-robot-for-senior-citizens"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>A Smart Mobility Robot for Senior Citizens</h2>
+      <h3><a id="user-content-052018-082018" class="anchor" aria-hidden="true" href="#052018-082018"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>05/2018-08/2018</h3>
+      <table border="0">
+        <tbody><tr>
+       
+          <td width="50%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/rosRobot.jpg"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/rosRobot.jpg" width="100%" style="max-width: 100%;"></a>     
+       </td>
+          <td width="50%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/rosRobot1.jpg"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/rosRobot1.jpg" width="100%" style="max-width: 100%;"></a>  
+          </td> 
+        </tr>
+      </tbody></table>
+      <h2><a id="user-content-rubiks-cube-based-restoring-robot" class="anchor" aria-hidden="true" href="#rubiks-cube-based-restoring-robot"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Rubik’s Cube-Based Restoring Robot</h2>
+      <h3><a id="user-content-102018-062019" class="anchor" aria-hidden="true" href="#102018-062019"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>10/2018-06/2019</h3>
+      <p>Created algorithm based on machine vision to identify Rubik’s cube’s status with Python and Opencv, input it into
+      two phase algorithm to get optimal choice to restore this cube within 21 steps.
+      I've removed three motors so you can see how this robot work better.
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube3.jpg"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/cube3.jpg" width="100%" style="max-width: 100%;"></a>
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube4.jpg"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/cube4.jpg" width="100%" style="max-width: 100%;"></a>
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/cube6.gif"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/cube6.gif" width="50%" style="max-width: 100%;"></a></p>
+      <h2><a id="user-content-avg-car-design-based-on-pid-control" class="anchor" aria-hidden="true" href="#avg-car-design-based-on-pid-control"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>AVG Car Design based on PID control</h2>
+      <h3><a id="user-content-102018-122018" class="anchor" aria-hidden="true" href="#102018-122018"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>10/2018-12/2018</h3>
+      <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/AVG.png.jpg"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/AVG.png.jpg" width="50%" style="max-width: 100%;"></a></p>
+      <h2><a id="user-content-four-tracked-lunar-service-robot" class="anchor" aria-hidden="true" href="#four-tracked-lunar-service-robot"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Four Tracked Lunar Service Robot</h2>
+      <h3><a id="user-content-012019-052019" class="anchor" aria-hidden="true" href="#012019-052019"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>01/2019-05/2019</h3>
+      <table border="0">
+        <tbody><tr>
+       
+          <td width="50%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot.png" width="100%" style="max-width: 100%;"></a>     
+       </td>
+          <td width="50%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot1.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/Four%20Tracked%20Lunar%20Service%20Robot1.png" width="100%" style="max-width: 100%;"></a>  
+          </td> 
+        </tr>
+      </tbody></table>
+      <table border="0">
+        <tbody><tr>
+       
+          <td width="33%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/image29.gif"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/image29.gif" width="100%" style="max-width: 100%;"></a>     
+       </td>
+          <td width="33%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/image36.gif"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/image36.gif" width="100%" style="max-width: 100%;"></a>  
+          </td> 
+           <td width="33%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/image48.gif"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/image48.gif" width="100%" style="max-width: 100%;"></a>  
+          </td> 
+        </tr>
+      </tbody></table>
+      <table border="0">
+        <tbody><tr>
+       
+          <td width="50%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/image14.gif"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/image14.gif" width="100%" style="max-width: 100%;"></a>     
+       </td>
+          <td width="50%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/image11.gif"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/image11.gif" width="100%" style="max-width: 100%;"></a>  
+        </td></tr>
+      </tbody></table>
+      <h2><a id="user-content-fall-prevention-walking-aid-for-seniors" class="anchor" aria-hidden="true" href="#fall-prevention-walking-aid-for-seniors"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Fall Prevention Walking Aid for Seniors</h2>
+      <h3><a id="user-content-092019-112020" class="anchor" aria-hidden="true" href="#092019-112020"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>09/2019-11/2020</h3>
+      <table border="0">
+        <tbody><tr>
+       
+          <td width="33%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Fall%20Prevention%20Walking%20Aid%20for%20Seniors1.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/Fall%20Prevention%20Walking%20Aid%20for%20Seniors1.png" width="100%" style="max-width: 100%;"></a>     
+       </td>
+          <td width="33%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Fall%20Prevention%20Walking%20Aid%20for%20Seniors4.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/Fall%20Prevention%20Walking%20Aid%20for%20Seniors4.png" width="100%" style="max-width: 100%;"></a>  
+          </td> 
+           <td width="33%">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Fall%20Prevention%20Walking%20Aid%20for%20Seniors5.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/Fall%20Prevention%20Walking%20Aid%20for%20Seniors5.png" width="100%" style="max-width: 100%;"></a>  
+          </td> 
+        </tr>
+      </tbody></table>
+      <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Fall%20Prevention%20Walking%20Aid%20for%20Seniors2.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/Fall%20Prevention%20Walking%20Aid%20for%20Seniors2.png" width="70%" style="max-width: 100%;"></a></p>  
+      <p><a target="_blank" rel="noopener noreferrer" href="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/Fall%20Prevention%20Walking%20Aid%20for%20Seniors3.png"><img src="https://github.com/hanmirror/hanmirror.github.io/raw/gh-pages/Fall%20Prevention%20Walking%20Aid%20for%20Seniors3.png" width="70%" style="max-width: 100%;"></a></p>  
+      </article>
+        </div>
+
+      </div>
+      
+      <div class="post">
+				<h2 class="title"><a name="Contact"></a>Contact </h2>
+			  <div class="entry">					
+          <ul>
+            <li>E-mail: hanmirror@126.com</li>
+          </ul>
+        </div>
+		  </div>
+
+		<div style="clear: both;">&nbsp;</div>
+    </div>
+		</div>
+		<!-- end #content -->
+		<div id="sidebar">
+			<ul>
+				<li>
+					<h2>About</h2>
+          <p><img src="./files/photo.jpg" alt="" width="80" height="110" class="alignleft border">
+            I am Han Mengrui, a student of <strong><a href="https://bjut.edu.cn">Beijing University of Technology</a></strong>.I came form Beijing. I am interested in  mechanical design and robot control and determined to take further education in those areas. I like kendo and I can speak German, French and Korean.</p>
+			  </li>
+              <li>
+					<h2><a name="Featured"></a>Featured</h2>
+					<ul>
+						<li> EPG and ultrasound research</li>
+						<li><iframe width="195" height="163" src="./files/SusKm_Plbp4.html" frameborder="0" allowfullscreen=""></iframe></li>
+					  <li><iframe width="195" height="163" src="./files/j5Rrpbr0ldA.html" frameborder="0" allowfullscreen=""></iframe>
+</li>
+<li> See more <a href="http://utphonetics.ca/">HERE</a> </li>
+					</ul>
+				</li>
+				<li>
+					<h2><a name="Links"></a>Links</h2>
+					<ul>
+						<li><a href="http://www.utoronto.ca/">University of Toronto</a></li>
+                      <li>Linguistics Department</li>
+				      <li><a href="http://works.bepress.com/alexei_kochetov/">SelectedWorks</a></li>
+				 	  	<li><a href="http://linguistics.utoronto.ca/research/phon3/PhonFrame.html">UofT Phonetics Lab</a></li>
+                        <li><a href="http://www.slp.utoronto.ca/aboutus/rlabs/oraldlaboratory.htm">Oral Dynamics Lab, SLP</a></li>
+                      <li><a href="http://www.slp.utoronto.ca/aboutus/rlabs/vrlab/vrhome.htm">Voice &amp; Resonance Lab, SLP</a></li>
+                    	<li><a href="http://www.sfu.ca/phono.html">Phonological Processing Lab, SFU</a></li>    
+                        <li><a href="http://www.phonetik.uni-muenchen.de/">Institut für Phonetik ..., LMU</a></li>
+                     	<li><a href="http://www.haskins.yale.edu/">Haskins Laboratories</a></li>
+ 						<li><a href="http://quote.ucsd.edu/blogs/phonoloblog/">Phonoloblog</a></li>
+						<li><a href="http://lsadc.org/">Linguistic Society of America</a></li>
+					</ul>
+				</li>
+								
+			</ul>
+		</div>
+		<!-- end #sidebar -->
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	</div>
+	</div>
+	<!-- end #page -->
+</div>
+
+
+</body></html>
