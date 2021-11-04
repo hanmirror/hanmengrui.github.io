@@ -31,10 +31,31 @@ whether gears were good
 
 ## A Smart Mobility Robot for Senior Citizens
 ### 05/2018-08/2018
+<table border="0">
+  <tr>
+ </td>
+    <td width="50%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/rosRobot.jpg" width="100%">     
+ </td>
+    <td width="50%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/rosRobot1.jpg" width="100%">  
+    </td> 
+  </tr>
+</table>
 
-
-## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
-### 12/2019-06/2021
+## Rubik’s Cube-Based Restoring Robot
+### 10/2018-06/2019
+<table border="0">
+  <tr>
+ </td>
+    <td width="50%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/rosRobot.jpg" width="100%">     
+ </td>
+    <td width="50%">
+      <img src="https://github.com/hanmirror/hanmirror.github.io/blob/gh-pages/rosRobot1.jpg" width="100%">  
+    </td> 
+  </tr>
+</table>
 
 ## Graduation Thesis: Lightweight Method of Laser Tracing System Mechanical Structure Based on 3D Topology Optimization
 ### 12/2019-06/2021
